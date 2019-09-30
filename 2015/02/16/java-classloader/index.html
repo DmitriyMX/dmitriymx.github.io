@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Classloader: динамичкеская загрузка классов | DmitriyMX Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Вот вам простой вопрос: как идентифицируются классы в JVM? Правильный ответ: по полному имени класса, состоящее из имени пакета и собственного имени класса. Из этого напрашивается вывод, что в прогр">
+<meta name="keywords" content="java,classloader">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Classloader: динамичкеская загрузка классов">
+<meta property="og:url" content="http://localhost:8080/2015/02/16/java-classloader/index.html">
+<meta property="og:site_name" content="DmitriyMX Blog">
+<meta property="og:description" content="Вот вам простой вопрос: как идентифицируются классы в JVM? Правильный ответ: по полному имени класса, состоящее из имени пакета и собственного имени класса. Из этого напрашивается вывод, что в прогр">
+<meta property="og:locale" content="ru">
+<meta property="og:image" content="http://localhost:8080/2015/02/16/java-classloader/title.png">
+<meta property="og:image" content="http://localhost:8080/2015/02/16/java-classloader/pic1.png">
+<meta property="og:image" content="http://localhost:8080/2015/02/16/java-classloader/pic2.png">
+<meta property="og:updated_time" content="2019-07-13T13:37:27.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Classloader: динамичкеская загрузка классов">
+<meta name="twitter:description" content="Вот вам простой вопрос: как идентифицируются классы в JVM? Правильный ответ: по полному имени класса, состоящее из имени пакета и собственного имени класса. Из этого напрашивается вывод, что в прогр">
+<meta name="twitter:image" content="http://localhost:8080/2015/02/16/java-classloader/title.png">
+  
+    <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DmitriyMX Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Бложик Java программиста</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://localhost:8080"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java-classloader" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/16/java-classloader/" class="article-date">
+  <time datetime="2015-02-16T06:17:52.000Z" itemprop="datePublished">2015-02-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Classloader: динамичкеская загрузка классов
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/2015/02/16/java-classloader/title.png">
+
+<p>Вот вам простой вопрос: как идентифицируются классы в <strong>JVM</strong>? Правильный ответ: по полному имени класса, состоящее из имени пакета и собственного имени класса. Из этого напрашивается вывод, что в программе не может существовать два класса с одинаковыми полными именами. Однако, это не так. Как и в начальной школе, где нас учили правилу “на ноль делить нельзя”, а потом в старших классах рассказали про бесконечность, так и в <strong>Java</strong> есть “маленькая ложь”.</p>
+<p>В действительности, классы идентифицируются по имени пакета, собственного имени класса и… загрузчику, <strong>Classloader</strong>‘у. Таким образом, в программе могут существовать два класса с <em>одинаковыми полными именами</em> и не конфликтовать друг с другом.</p>
+<p>Об этом и других вкусностях <strong>Classloader</strong>‘а мы сегодня и поговорим.</p>
+<a id="more"></a>
+
+<h2 id="Теория"><a href="#Теория" class="headerlink" title="Теория"></a>Теория</h2><p>Одной из основных особенностей <strong>Java</strong> является модель динамической загрузки классов, которая позволяет загружать исполняемый код в <strong>JRE</strong> не перезагружая основное приложение. Любой класс, используемый в среде исполнения так или иначе был загружен каким-либо загрузчиком в <strong>Java</strong>. К началу выполнения программы, создано три основных загрузчика:</p>
+<ul>
+<li><strong>Bootstrap Classloader</strong> - базовый загрузчик;</li>
+<li><strong>Extension Classloader</strong> - загрузчик расширений;</li>
+<li><strong>System Classloader</strong> - системный загрузчик.</li>
+</ul>
+<p><strong>Bootstrap Classloader</strong> реализован на уровне <strong>JVM</strong> и не имеет обратной связи со средой исполнения. Данным загрузчиком загружаются классы из директории <code>$JAVA_HOME/lib</code> и все базовые классы. Поэтому, попытка получения загрузчика у классов <code>java.*</code> всегда заканчивается null’ом. Но если очень хочется, то управлять загрузкой базовых классов можно с помощью ключа <code>-Xbootclasspath</code>, который позволяет переопределять наборы базовых классов.</p>
+<p><strong>Extension Classloader</strong> загружает классы из директории <code>$JAVA_HOME/lib/ext</code>. В Sun JRE - это класс <code>sun.misc.Launcher$ExtClassLoader</code>. Управлять загрузкой расширений можно с помощью системной опции <code>java.ext.dirs</code>.</p>
+<p><strong>System Classloader</strong> реализованный уже на уровне <strong>JRE</strong>. В Sun JRE — это класс <code>sun.misc.Launcher$AppClassLoader</code>. Этим загрузчиком загружаются классы, пути к которым указаны в переменной окружения <code>CLASSPATH</code>. Управлять загрузкой системных классов можно с помощью ключа <code>-classpath</code> или системной опцией.</p>
+<p>Загрузчики классов образуют иерархию, корнем которой является базовый загрузчик. Все остальные загрузчики при инициализации сохраняют ссылку на родительский загрузчик. Таким образом достигается реализация модели делегирования загрузки.</p>
+<img src="/2015/02/16/java-classloader/pic1.png" title="иерархия загрузчиков классов">
+
+<p>Право загрузки класса рекурсивно делегируется от самого нижнего загрузчика в иерархии к самому верхнему. Такой подход позволяет загружать классы тем загрузчиком, который максимально близко находится к базовому. Так достигается максимальная область видимости классов. Под областью видимости подразумевается следующее: каждый загрузчик ведет учет классов, которые были им загружены. Множество этих классов и назвается областью видимости. При этом загрузчик видит только “свои” классы и классы “родителя” и понятия не имеет о классах, которые были загружены его “потомком”.</p>
+<p>Рассмотрим процесс загрузки более детально. Пусть во время выполнения программы встретилась декларация переменной использующую класс <code>Bagira</code>. Тогда процесс поиска и загрузки класса будет таким:</p>
+<img src="/2015/02/16/java-classloader/pic2.png" title="процесс поиска класса">
+
+<p>Теперь подумаем: какой класс будет реально загружен, если в <code>$JAVA_HOME/lib/ext</code> и в <code>CLASSPATH</code> есть классы с одинаковыми полными именами? Правильно, класс из <code>$JAVA_HOME/lib/ext</code>, а на <code>CLASSPATH</code> никто не посмотрит. Хотя с ним тоже не все просто: классы загружаются в том порядке, в котором они были указаны в <code>CLASSPATH</code>. По этому если указать два jar-файла, к примеру <em>A.jar</em> и <em>B.jar</em>, содержащие одинаковые классы, то в память загрузится класс из <em>A.jar</em>, а класс из <em>B.jar</em> будет пропущен.</p>
+<h2 id="Практика"><a href="#Практика" class="headerlink" title="Практика"></a>Практика</h2><p>Теперь от слов к делу. Если мы собираемся создать свой загрузчик классов, то важно помнить следующее:</p>
+<ul>
+<li>загрузчик должен явно или неявно расширять класс <code>java.lang.ClassLoader</code>;</li>
+<li>загрузчик должен поддерживать модель делегирования загрузки, образуя иерархию. Если этого не сделать, могут возникнуть проблемы с областью видимости;</li>
+<li>в классе <code>java.lang.ClassLoader</code> уже реализован метод непосредственной загрузки - <code>defineClass()</code>, который байт-код преобразует в <code>java.lang.Class</code>, осуществляя его валидацию;</li>
+<li>механизм рекурсивного поиска также реализован в классе <code>java.lang.ClassLoader</code> и заботиться об это не нужно;</li>
+<li>для корректной реализации загрузчика достаточно лишь переопределить метод <code>loadClass()</code> класса <code>java.lang.ClassLoader</code>.</li>
+</ul>
+<p>Наш загрузчик будет загружать jar-файлы не через <code>java.net.URLClassLoader</code>, а “вручную”. Так будет нагляднее рассмотреть весь процесс. А грузить мы будем плагины, которые будут располагаться в папке <code>plugins/</code> и интерфейс для которых нужно описать:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ru.dmitriymx.cl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IPlugin</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Теперь напишем наш загрузчик. Правда мы здесь немного смухлюем и загрузим сразу все классы плагина в память:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ru.dmitriymx.cl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FilenameFilter;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.util.Enumeration;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.jar.JarEntry;</span><br><span class="line"><span class="keyword">import</span> java.util.jar.JarFile;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PluginLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Class&lt;?&gt;&gt; cacheClass = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> ClassLoader parent;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PluginLoader</span><span class="params">(ClassLoader parent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.parent = parent;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;?&gt; loadClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        Class&lt;?&gt; result = cacheClass.get(name);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (result == <span class="keyword">null</span>) &#123;</span><br><span class="line">            result = parent.loadClass(name);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadPlugin</span><span class="params">(String strPluginFile)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        JarFile jarFile = <span class="keyword">new</span> JarFile(<span class="string">"plugins/"</span> + strPluginFile);</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;JarEntry&gt; jarEntries = jarFile.entries();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (jarEntries.hasMoreElements()) &#123;</span><br><span class="line">            JarEntry jarEntry = jarEntries.nextElement();</span><br><span class="line">            <span class="keyword">if</span> (jarEntry.isDirectory())</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (jarEntry.getName().endsWith(<span class="string">".class"</span>)) &#123;</span><br><span class="line">                <span class="keyword">byte</span>[] classData = loadClassData(jarFile, jarEntry);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (classData != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    Class&lt;?&gt; clazz = defineClass(</span><br><span class="line">                            jarEntry.getName().replace(<span class="string">'/'</span>, <span class="string">'.'</span>).substring(<span class="number">0</span>,jarEntry.getName().length() - <span class="number">6</span>),</span><br><span class="line">                            classData, <span class="number">0</span>, classData.length);</span><br><span class="line">                    cacheClass.put(clazz.getName(), clazz);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadPlugins</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">// получаем список jar-файлов</span></span><br><span class="line"></span><br><span class="line">        String[] jarList = <span class="keyword">new</span> File(<span class="string">"plugins/"</span>).list(<span class="keyword">new</span> FilenameFilter() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">accept</span><span class="params">(File file, String s)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> s.toLowerCase().endsWith(<span class="string">".jar"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// загружаем каждый плагин</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (String strJarFile : jarList) &#123;</span><br><span class="line">            loadPlugin(strJarFile);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// получаем байт-код класса</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] loadClassData(JarFile jarFile, JarEntry jarEntry)</span><br><span class="line">            <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="keyword">long</span> size = jarEntry.getSize();</span><br><span class="line">        <span class="keyword">if</span> (size &lt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (size &gt; Integer.MAX_VALUE) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Class size too long"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) size];</span><br><span class="line">        InputStream is = jarFile.getInputStream(jarEntry);</span><br><span class="line">        is.read(buffer);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> buffer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Теперь напишем основное приложение, использующее наш загрузчик</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ru.dmitriymx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ru.dmitriymx.cl.IPlugin;</span><br><span class="line"><span class="keyword">import</span> ru.dmitriymx.cl.PluginLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        PluginLoader loader = <span class="keyword">new</span> PluginLoader(Main.class.getClassLoader());</span><br><span class="line"></span><br><span class="line">        loader.loadPlugins();</span><br><span class="line"></span><br><span class="line">        IPlugin plugin = (IPlugin) loader.loadClass(<span class="string">"plugin.test.Plugin"</span>)</span><br><span class="line">                .newInstance();</span><br><span class="line"></span><br><span class="line">        plugin.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Отлично. Осталось написать сам плагин:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> plugin.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ru.dmitriymx.cl.IPlugin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Plugin</span> <span class="keyword">implements</span> <span class="title">IPlugin</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Plugin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"new object..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"execute method run()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Упакуем наш плагин в jar и сохраним в папке <code>plugins/</code>.</p>
+<p>Да, мы маленько “сжульничали”, жестко указав в основном приложении какой класс считать за точку входа, но это никак не скажется на общей картине происходящего. Наша программа успешно будет загружать плагин и выполнять его метод <code>run()</code>.</p>
+<p>Оу, чуть не забыл. “…в программе могут существовать два класса с одинаковым полным именем и не конфликтовать друг с другом…”, помню-помню, сейчас продемонстрирую.</p>
+<p>Напишите еще один плагин с таким же названием класса и с таким же пакетом. Поменяйте только выводимый текст, чтобы хоть как то они визуально различались (а то сами запутаемся). В основной программе изменим содержание метода <code>main()</code> на такое:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PluginLoader loader1 = <span class="keyword">new</span> PluginLoader(Main.class.getClassLoader());</span><br><span class="line">PluginLoader loader2 = <span class="keyword">new</span> PluginLoader(Main.class.getClassLoader());</span><br><span class="line"></span><br><span class="line">loader1.loadPlugin(<span class="string">"plugin1.jar"</span>);</span><br><span class="line">loader2.loadPlugin(<span class="string">"plugin2.jar"</span>);</span><br><span class="line"></span><br><span class="line">IPlugin plugin1 = loader1.loadClass(<span class="string">"plugin.test.Plugin"</span>).newInctanse();</span><br><span class="line">IPlugin plugin2 = loader2.loadClass(<span class="string">"plugin.test.Plugin"</span>).newInctanse();</span><br><span class="line"></span><br><span class="line">plugin1.run();</span><br><span class="line">plugin2.run();</span><br></pre></td></tr></table></figure>
+
+<p>Вуаля, у нас работают два одинаковых класса и при этом не конфликтуют. Однако, если мы попытаемся сделать вот так:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">plugin1 = plugin2;</span><br></pre></td></tr></table></figure>
+
+<p>то <strong>JVM</strong> пошлет нас куда подальше (<code>java.lang.ClassCastException</code>), потому как для <strong>JVM</strong> это два <em>абсолютно разных</em> класса.</p>
+<p>Думаю, на этом всё. Что не понятно пишем в комментариях.</p>
+<hr>
+<p>Источники:</p>
+<ul>
+<li><a href="http://habrahabr.ru/post/103830/" target="_blank" rel="noopener">habrahabr.ru (1)</a></li>
+<li><a href="http://habrahabr.ru/post/104229/" target="_blank" rel="noopener">habrahabr.ru (2)</a></li>
+<li><a href="http://samolisov.blogspot.ru/2008/01/java.html" target="_blank" rel="noopener">samolisov.blogspot.ru</a></li>
+<li><a href="http://voituk.kiev.ua/2008/01/14/java-plugins/" target="_blank" rel="noopener">voituk.kiev.ua</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://localhost:8080/2015/02/16/java-classloader/" data-id="cjy1luna0000s50h9bfzqrsu1" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/classloader/">classloader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/01/18/ssh-cheat-sheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Шпаргалка по SSH</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Шпаргалки/">Шпаргалки</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">февраль 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">январь 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">декабрь 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/15/dd-examples/">Примеры использования команды dd</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/26/disable-ping-linux/">Как отключить ping отклик на Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 DmitriyMX<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

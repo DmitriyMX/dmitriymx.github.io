@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Примеры использования команды dd | DmitriyMX Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Создание образа диска: dd if=/dev/cdrom of=image.iso  Если диск битый, можно попробовать его прочитать, игнорируя ошибки чтения: dd if=/dev/cdrom of=image.iso conv=noerror">
+<meta name="keywords" content="linux,dd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Примеры использования команды dd">
+<meta property="og:url" content="http://localhost:8080/2015/01/15/dd-examples/index.html">
+<meta property="og:site_name" content="DmitriyMX Blog">
+<meta property="og:description" content="Создание образа диска: dd if=/dev/cdrom of=image.iso  Если диск битый, можно попробовать его прочитать, игнорируя ошибки чтения: dd if=/dev/cdrom of=image.iso conv=noerror">
+<meta property="og:locale" content="ru">
+<meta property="og:updated_time" content="2019-09-30T08:28:53.770Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Примеры использования команды dd">
+<meta name="twitter:description" content="Создание образа диска: dd if=/dev/cdrom of=image.iso  Если диск битый, можно попробовать его прочитать, игнорируя ошибки чтения: dd if=/dev/cdrom of=image.iso conv=noerror">
+  
+    <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DmitriyMX Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Бложик Java программиста</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://localhost:8080"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-dd-examples" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/15/dd-examples/" class="article-date">
+  <time datetime="2015-01-15T20:03:17.000Z" itemprop="datePublished">2015-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Шпаргалки/">Шпаргалки</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Примеры использования команды dd
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Создание образа диска:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/cdrom of=image.iso</span><br></pre></td></tr></table></figure>
+
+<p>Если диск битый, можно попробовать его прочитать, игнорируя ошибки чтения:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/cdrom of=image.iso conv=noerror</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>Клонирования жесткого диска <em>(не оптимальный метод)</em>: </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/sda of=/dev/sdb bs=4096</span><br></pre></td></tr></table></figure>
+
+<p>Создание и передача в сеть бэкапа раздела диска:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/sda1 | ssh user@host "dd of=/home/user/sda.img"</span><br></pre></td></tr></table></figure>
+
+<p>Затирание диска:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=/dev/sda</span><br></pre></td></tr></table></figure>
+
+<p>“Продвинутое” затирание диска:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/random of=/dev/sda</span><br></pre></td></tr></table></figure>
+
+<p>Затирание файла <em>(wipe)</em>: </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=file.raw &amp;&amp; rm file.raw</span><br></pre></td></tr></table></figure>
+
+<p>Резервное копирование MBR:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/sda of=mbr.img bs=512 count=1</span><br></pre></td></tr></table></figure>
+
+<p>Копирование загрузочного кода MBR:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/sda of=boot-code.mbr bs=446 count=1</span><br></pre></td></tr></table></figure>
+
+<p>Копирование таблицы разделов MBR: </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/sda of=part-table.mbr bs=1 count=66 skip=446</span><br></pre></td></tr></table></figure>
+
+<p>Восстановление MBR:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=mbr.img of=/dev/sda</span><br></pre></td></tr></table></figure>
+
+<p>Создание пустого файла размеров 10 МиБ:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=empty.file bs=1M count=10</span><br></pre></td></tr></table></figure>
+
+<p>Создание sparse-файла в 1 ГиБ:<br><small><em>(файл, который создаётся с заданным размером, но при этом физически не занимает пространство, пока в него не будут записаны данные)</em></small></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/null of=big.empty.file bs=1M seek=1024</span><br></pre></td></tr></table></figure>
+
+<p>Чтобы узнать о состоянии копирования (статус <code>dd</code>) нужно отправить процессу <code>dd</code> сигнал <code>USR1</code>:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pkill -USR1 dd</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Источники: </p>
+<ul>
+<li><a href="http://habrahabr.ru/post/117050/" target="_blank" rel="noopener">habrahabr.ru</a></li>
+<li><a href="http://rus-linux.net/lib.php?name=MyLDP/consol/dd/dd-1.html" target="_blank" rel="noopener">rus-linux.net</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://localhost:8080/2015/01/15/dd-examples/" data-id="cjy1lun82000150h9f0ufcnzn" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dd/">dd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/18/ssh-cheat-sheet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Следующий</strong>
+      <div class="article-nav-title">
+        
+          Шпаргалка по SSH
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/26/disable-ping-linux/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Как отключить ping отклик на Linux</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Шпаргалки/">Шпаргалки</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">февраль 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">январь 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">декабрь 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/15/dd-examples/">Примеры использования команды dd</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/26/disable-ping-linux/">Как отключить ping отклик на Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 DmitriyMX<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

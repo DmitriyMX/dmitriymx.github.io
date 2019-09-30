@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Работа с физическими носителями в VirtualBox | DmitriyMX Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Заранее хочется предупредить, что работая с физическими носителями через виртуальную машину вы рискуете всё запороть. Все ваши действия производятся на ваш страх и риск. Я предупредил. По сути, рабо">
+<meta name="keywords" content="virtualbox">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Работа с физическими носителями в VirtualBox">
+<meta property="og:url" content="http://localhost:8080/2014/12/23/virtualbox-rawdisk/index.html">
+<meta property="og:site_name" content="DmitriyMX Blog">
+<meta property="og:description" content="Заранее хочется предупредить, что работая с физическими носителями через виртуальную машину вы рискуете всё запороть. Все ваши действия производятся на ваш страх и риск. Я предупредил. По сути, рабо">
+<meta property="og:locale" content="ru">
+<meta property="og:image" content="http://localhost:8080/2014/12/23/virtualbox-rawdisk/virtualbox_hdd.png">
+<meta property="og:updated_time" content="2019-07-13T13:33:26.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Работа с физическими носителями в VirtualBox">
+<meta name="twitter:description" content="Заранее хочется предупредить, что работая с физическими носителями через виртуальную машину вы рискуете всё запороть. Все ваши действия производятся на ваш страх и риск. Я предупредил. По сути, рабо">
+<meta name="twitter:image" content="http://localhost:8080/2014/12/23/virtualbox-rawdisk/virtualbox_hdd.png">
+  
+    <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DmitriyMX Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Бложик Java программиста</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://localhost:8080"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-virtualbox-rawdisk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/12/23/virtualbox-rawdisk/" class="article-date">
+  <time datetime="2014-12-23T20:55:33.000Z" itemprop="datePublished">2014-12-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Работа с физическими носителями в VirtualBox
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/2014/12/23/virtualbox-rawdisk/virtualbox_hdd.png">
+
+<p><em>Заранее хочется предупредить, что работая с физическими носителями через виртуальную машину вы рискуете всё запороть. Все ваши действия производятся на ваш страх и риск. Я предупредил.</em></p>
+<p>По сути, работа с физическими носителями ничем не отличается от работы с виртуальными аналогами, за исключением не возможности делать snapshots. Вернее можно, но не рекомендуется от слова <em>совсем</em>.</p>
+<p><em>- Зачем это нужно?</em></p>
+<p>Ответ простой, как и сам вопрос: работа в двух операционных системах, одна из которых находится на физическом носителе. Например LiveUSB или Linux, которая находится на соседнем разделе диска. Причин использовать этот механизм может быть много. Но перейдем же к исполнению нашей “хотелки”.</p>
+<p>Для начала нам нужно узнать адрес, по которому можно будет напрямую обратиться к носителю. После чего запускаем команду по созданию некой “ссылки” на наш носитель.</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">C:\&gt; wmic diskdrive list brief</span><br><span class="line">Caption                   DeviceID            Model                     Partitions  Size</span><br><span class="line">VBOX HARDDISK ATA Device  \\.\PHYSICALDRIVE0  VBOX HARDDISK ATA Device  3           500105249280</span><br><span class="line">C:\&gt; VBoxManage internalcommands createrawvmdk -filename C:\mydrive.vmdk -rawdisk \\.\PHYSICALDRIVE0</span><br></pre></td></tr></table></figure>
+
+<p>Так же можно вместо целого диска, подключать только его разделы. Для этого добавьте параметр <code>--partitions</code> и через запятую перечислите номера разделов</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">C:\&gt; VBoxManage internalcommands createrawvmdk -filename C:\mydrive.vmdk -rawdisk \\.\PHYSICALDRIVE0 -partitions 1,3</span><br></pre></td></tr></table></figure>
+
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vboxmanage internalcommands createrawvmdk -filename /var/mydrive.vmdk -rawdisk /dev/sda</span><br></pre></td></tr></table></figure>
+
+<p>Обязательно добавить пользователя, от имени которого будет запускаться <code>virtualbox</code>, в группы <code>vboxusers</code> и <code>disk</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">usermod -a -G vboxusers,disk $(whoami)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Далее подключаем нашу “ссылку” mydrive.vmdk к VM как обычный диск и работаем.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://localhost:8080/2014/12/23/virtualbox-rawdisk/" data-id="cjy1lun8l000550h97mr53yqt" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/12/24/file-as-disk/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Следующий</strong>
+      <div class="article-nav-title">
+        
+          Работа с файлами как с дисками
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/14/end-of-era-craftbukkit/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Конец эпохи CraftBukkit</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Шпаргалки/">Шпаргалки</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">февраль 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">январь 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">декабрь 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/15/dd-examples/">Примеры использования команды dd</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/26/disable-ping-linux/">Как отключить ping отклик на Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 DmitriyMX<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

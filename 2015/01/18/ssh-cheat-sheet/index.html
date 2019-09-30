@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Шпаргалка по SSH | DmitriyMX Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="КлючиГенерация ключа ssh-keygen  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужно получить доступ; ~/.ssh/id_rsa - закрытый ключ. Его нельз">
+<meta name="keywords" content="linux,ssh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Шпаргалка по SSH">
+<meta property="og:url" content="http://localhost:8080/2015/01/18/ssh-cheat-sheet/index.html">
+<meta property="og:site_name" content="DmitriyMX Blog">
+<meta property="og:description" content="КлючиГенерация ключа ssh-keygen  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужно получить доступ; ~/.ssh/id_rsa - закрытый ключ. Его нельз">
+<meta property="og:locale" content="ru">
+<meta property="og:updated_time" content="2019-09-30T07:48:09.199Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Шпаргалка по SSH">
+<meta name="twitter:description" content="КлючиГенерация ключа ssh-keygen  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужно получить доступ; ~/.ssh/id_rsa - закрытый ключ. Его нельз">
+  
+    <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DmitriyMX Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Бложик Java программиста</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://localhost:8080"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ssh-cheat-sheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/18/ssh-cheat-sheet/" class="article-date">
+  <time datetime="2015-01-18T14:34:18.000Z" itemprop="datePublished">2015-01-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Шпаргалки/">Шпаргалки</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Шпаргалка по SSH
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Ключи"><a href="#Ключи" class="headerlink" title="Ключи"></a>Ключи</h2><p>Генерация ключа</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+
+<p>Сменить пароль на ключ</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -p</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>~/.ssh/id_rsa.pub</code> - открытый ключ. Его копируют на сервера, куда нужно получить доступ;</li>
+<li><code>~/.ssh/id_rsa</code> - закрытый ключ. Его нельзя никому показывать. В случае утечки - <strong>срочно менять ключ</strong>.</li>
+</ul>
+<p>Копирование ключа на сервер</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id user@server</span><br></pre></td></tr></table></figure>
+
+<p>Если консоль будет ругаться на “неизвестный хост” <em>(<code>Warning: Permanently added the RSA host key for IP address &#39;x.x.x.x&#39; to the list of known hosts.</code>)</em>, то нужно создать файл <code>~/.ssh/config</code> и прописать туда следующее:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">UserKnownHostsFile ~/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<h2 id="Копирование-файлов"><a href="#Копирование-файлов" class="headerlink" title="Копирование файлов"></a>Копирование файлов</h2><p>С локальной машины на сервер</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp path/myfile user@8.8.8.8:/full/path/to/new/location/</span><br></pre></td></tr></table></figure>
+
+<p>С сервера на локальную машину</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp user@8.8.8.8:/full/path/to/new/location/ path/myfile</span><br></pre></td></tr></table></figure>
+
+<h2 id="Удалённое-исполнение-кода"><a href="#Удалённое-исполнение-кода" class="headerlink" title="Удалённое исполнение кода"></a>Удалённое исполнение кода</h2><p>Удаленное выполнение команды</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh user@server ls /etc/</span><br></pre></td></tr></table></figure>
+
+<p>Удаленное выполнение команды с использованием управляющего терминала</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh user@server -t zsh</span><br></pre></td></tr></table></figure>
+
+<h2 id="Проброс-stdin-stdout"><a href="#Проброс-stdin-stdout" class="headerlink" title="Проброс stdin/stdout"></a>Проброс stdin/stdout</h2><p>Удаленно выполнить команду и сохранить вывод в локальный файл </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh user@server ls -l &gt; /tmp/ls.txt</span><br></pre></td></tr></table></figure>
+
+<p>Локально выполнить команду и сохранить вывод в файл на сервере</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l | scp user@server:/tmp/ls.txt</span><br></pre></td></tr></table></figure>
+
+<p>scp “для бедных”:<br><small><em>(tar запаковывает файлы локально и результат пишет в stdout, откуда их читает ssh, передает всё это в удаленный stdin, где их читает tar (cd игнорирует stdin))</em></small></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -c * | ssh user@server "cd /tmp/arch &amp;&amp; tar -x"</span><br></pre></td></tr></table></figure>
+
+<h2 id="Проброс-X-сервера"><a href="#Проброс-X-сервера" class="headerlink" title="Проброс X-сервера"></a>Проброс X-сервера</h2><p>Запуск Firefox</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -XYC user@server firefox</span><br></pre></td></tr></table></figure>
+
+<p>параметры:</p>
+<ul>
+<li><code>-X</code> - проброс X-сервера</li>
+<li><code>-Y</code> - проброс авторизации</li>
+<li><code>-C</code> - сжатие трафика</li>
+</ul>
+<p>Безопасное подключение к windows-серверу<br><small><em><a href="https://technet.microsoft.com/library/security/ms11-083" target="_blank" rel="noopener">Не рекомендуется у Windows оставлять голый RDP наружу</a></em></small></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh user@server rdesktop -k en-us 192.168.1.1 -g 1900x1200</span><br></pre></td></tr></table></figure>
+
+<h2 id="Socks-proxy"><a href="#Socks-proxy" class="headerlink" title="Socks-proxy"></a>Socks-proxy</h2><p>Открытие порта для socks-proxy</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -D 8080 user@server</span><br></pre></td></tr></table></figure>
+
+<p>Теперь в браузере, указав <code>localhost:8080</code> в качестве socks-proxy, можно ходить по безопасно сайтам <em>(трафик зашифрован через ssh)</em>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://localhost:8080/2015/01/18/ssh-cheat-sheet/" data-id="cjy1lun8q000750h9gce7t2h9" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/02/16/java-classloader/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Следующий</strong>
+      <div class="article-nav-title">
+        
+          Classloader: динамичкеская загрузка классов
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/01/15/dd-examples/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Примеры использования команды dd</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Шпаргалки/">Шпаргалки</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">февраль 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">январь 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">декабрь 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/15/dd-examples/">Примеры использования команды dd</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/26/disable-ping-linux/">Как отключить ping отклик на Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 DmitriyMX<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

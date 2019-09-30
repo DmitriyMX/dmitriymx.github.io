@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Работа с файлами как с дисками | DmitriyMX Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Для начала давайте создадим пустой файл, размером в 1 гибибайт dd if=/dev/zero of=disk.dd bs=$((1*1024*1024)) count=1024  Теперь запишем в него таблицу разделов parted disk.dd  parted&amp;gt; mktable msdo">
+<meta name="keywords" content="linux,dd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Работа с файлами как с дисками">
+<meta property="og:url" content="http://localhost:8080/2014/12/24/file-as-disk/index.html">
+<meta property="og:site_name" content="DmitriyMX Blog">
+<meta property="og:description" content="Для начала давайте создадим пустой файл, размером в 1 гибибайт dd if=/dev/zero of=disk.dd bs=$((1*1024*1024)) count=1024  Теперь запишем в него таблицу разделов parted disk.dd  parted&amp;gt; mktable msdo">
+<meta property="og:locale" content="ru">
+<meta property="og:updated_time" content="2019-07-13T13:43:11.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Работа с файлами как с дисками">
+<meta name="twitter:description" content="Для начала давайте создадим пустой файл, размером в 1 гибибайт dd if=/dev/zero of=disk.dd bs=$((1*1024*1024)) count=1024  Теперь запишем в него таблицу разделов parted disk.dd  parted&amp;gt; mktable msdo">
+  
+    <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DmitriyMX Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Бложик Java программиста</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://localhost:8080"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-file-as-disk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/12/24/file-as-disk/" class="article-date">
+  <time datetime="2014-12-23T21:04:01.000Z" itemprop="datePublished">2014-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Работа с файлами как с дисками
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Для начала давайте создадим пустой файл, размером в 1 гибибайт</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=disk.dd bs=$((1*1024*1024)) count=1024</span><br></pre></td></tr></table></figure>
+
+<p>Теперь запишем в него таблицу разделов</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">parted disk.dd</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">parted&gt; mktable msdos</span><br><span class="line">parted&gt; mkpart primary 0% 100%</span><br><span class="line">parted&gt; unit B</span><br><span class="line">parted&gt; print</span><br><span class="line">Модель:  (file)</span><br><span class="line">Диск disk.dd: 1073741824B</span><br><span class="line">Размер сектора (логич./физич.): 512B/512B</span><br><span class="line">Таблица разделов: msdos</span><br><span class="line">Флаги диска:</span><br><span class="line"></span><br><span class="line">Номер  Начало    Конец        Размер       Тип      Файловая система  Флаги</span><br><span class="line"> 1     1048576B  1073741823B  1072693248B  primary</span><br></pre></td></tr></table></figure>
+
+<p>Подготовим наш раздел из файлодиска к работе. Подключаем его как блочное устройство</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">losetup --offset 1048576 --find --show disk.dd</span><br><span class="line">/dev/loop0</span><br></pre></td></tr></table></figure>
+
+<p>Отформатируем и смонтируем его</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/loop0</span><br><span class="line">sudo mount /dev/loop0 /mnt</span><br></pre></td></tr></table></figure>
+
+<p>По завершению работ, отключаем все устройства</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo umount /mnt</span><br><span class="line">losetup -d /dev/loop0</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://localhost:8080/2014/12/24/file-as-disk/" data-id="cjy1lun8c000350h99s65k5y8" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dd/">dd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/12/24/nginx-http-basic-auth/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Следующий</strong>
+      <div class="article-nav-title">
+        
+          Nginx и HTTP Auth basic
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/23/virtualbox-rawdisk/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Работа с физическими носителями в VirtualBox</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Шпаргалки/">Шпаргалки</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">февраль 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">январь 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">декабрь 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/15/dd-examples/">Примеры использования команды dd</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/26/disable-ping-linux/">Как отключить ping отклик на Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 DmitriyMX<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

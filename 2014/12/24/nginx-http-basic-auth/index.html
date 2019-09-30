@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Nginx и HTTP Auth basic | DmitriyMX Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Редактируем файл /etc/nginx/nginx.conf и в секции location добавляем такие строки: location / &amp;#123;    auth_basic &amp;quot;Hello! Enter password&amp;quot;;    auth_basic_user_file /etc/nginx/nginx.htpasswd;">
+<meta name="keywords" content="linux,nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx и HTTP Auth basic">
+<meta property="og:url" content="http://localhost:8080/2014/12/24/nginx-http-basic-auth/index.html">
+<meta property="og:site_name" content="DmitriyMX Blog">
+<meta property="og:description" content="Редактируем файл /etc/nginx/nginx.conf и в секции location добавляем такие строки: location / &amp;#123;    auth_basic &amp;quot;Hello! Enter password&amp;quot;;    auth_basic_user_file /etc/nginx/nginx.htpasswd;">
+<meta property="og:locale" content="ru">
+<meta property="og:updated_time" content="2019-07-13T13:32:17.740Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx и HTTP Auth basic">
+<meta name="twitter:description" content="Редактируем файл /etc/nginx/nginx.conf и в секции location добавляем такие строки: location / &amp;#123;    auth_basic &amp;quot;Hello! Enter password&amp;quot;;    auth_basic_user_file /etc/nginx/nginx.htpasswd;">
+  
+    <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DmitriyMX Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Бложик Java программиста</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://localhost:8080"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-nginx-http-basic-auth" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/12/24/nginx-http-basic-auth/" class="article-date">
+  <time datetime="2014-12-23T21:08:33.000Z" itemprop="datePublished">2014-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Nginx и HTTP Auth basic
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Редактируем файл <code>/etc/nginx/nginx.conf</code> и в секции <code>location</code> добавляем такие строки:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    auth_basic &quot;Hello! Enter password&quot;;</span><br><span class="line">    auth_basic_user_file /etc/nginx/nginx.htpasswd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>auth_basic</code> - указываем на включение режима http авторизации;</li>
+<li><code>auth_basic_user_file</code> - указываем пусть к файлу с паролями.</li>
+</ul>
+<p>Файл с паролями имеет следующий синтаксис:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># комментарий</span><br><span class="line">логин1:пароль1</span><br><span class="line">логин2:пароль2:комментарий</span><br></pre></td></tr></table></figure>
+
+<p>Пароли хранятся в зашифрованном виде. <strong>Nginx</strong> поддерживает три типа шифрования: стандартный crypt, апачевский метод и md5. Генерировать пароль можно либо через утилиту <code>htpasswd</code> из пакета Apache, либо через <code>openssl</code>.</p>
+<p>Стандартный метод <strong>nginx</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl passwd -crypt PASSWORD</span><br></pre></td></tr></table></figure>
+
+<p>Метод <strong>Apache2</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl passwd -apr1 PASSWORD</span><br><span class="line">htpasswd -c /etc/nginx/nginx.htpasswd admin</span><br></pre></td></tr></table></figure>
+
+<p><strong>md5</strong> метод:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl passwd -1 PASSWORD</span><br></pre></td></tr></table></figure>
+
+<p>Если необходимо на какой-то суб-директории отключить авторизацию, то вместо пригласительного текста пишем <code>off</code>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location /api/ &#123;</span><br><span class="line">    auth_basic off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Источники:</p>
+<ul>
+<li><a href="http://nginx.org/ru/docs/http/ngx_http_auth_basic_module.html" target="_blank" rel="noopener">nginx.org</a></li>
+<li><a href="http://server-tuning.info/apache/basic-password-auth.html" target="_blank" rel="noopener">server-tuning.info</a></li>
+<li><a href="http://roger.steneteg.org/441/basic-authentication-with-nginx/" target="_blank" rel="noopener">roger.steneteg.org</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://localhost:8080/2014/12/24/nginx-http-basic-auth/" data-id="cjy1lun8h000450h9tlv74khx" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/12/26/disable-ping-linux/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Следующий</strong>
+      <div class="article-nav-title">
+        
+          Как отключить ping отклик на Linux
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/24/file-as-disk/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Работа с файлами как с дисками</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Шпаргалки/">Шпаргалки</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">февраль 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">январь 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">декабрь 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/15/dd-examples/">Примеры использования команды dd</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/26/disable-ping-linux/">Как отключить ping отклик на Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 DmitriyMX<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
