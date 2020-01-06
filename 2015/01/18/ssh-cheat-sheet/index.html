@@ -5,18 +5,18 @@
   
   <title>Шпаргалка по SSH | DmitriyMX Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="КлючиГенерация ключа ssh-keygen  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужно получить доступ; ~/.ssh/id_rsa - закрытый ключ. Его нельз">
+  <meta name="description" content="КлючиГенерация ключа ssh-keygen  Указать другой выходной файл ssh-keygen -f ./path/to/file  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужн">
 <meta name="keywords" content="linux,ssh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Шпаргалка по SSH">
 <meta property="og:url" content="https://dmitriymx.ru/2015/01/18/ssh-cheat-sheet/index.html">
 <meta property="og:site_name" content="DmitriyMX Blog">
-<meta property="og:description" content="КлючиГенерация ключа ssh-keygen  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужно получить доступ; ~/.ssh/id_rsa - закрытый ключ. Его нельз">
+<meta property="og:description" content="КлючиГенерация ключа ssh-keygen  Указать другой выходной файл ssh-keygen -f ./path/to/file  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужн">
 <meta property="og:locale" content="ru">
-<meta property="og:updated_time" content="2019-09-30T07:48:09.199Z">
+<meta property="og:updated_time" content="2020-01-06T17:00:12.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Шпаргалка по SSH">
-<meta name="twitter:description" content="КлючиГенерация ключа ssh-keygen  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужно получить доступ; ~/.ssh/id_rsa - закрытый ключ. Его нельз">
+<meta name="twitter:description" content="КлючиГенерация ключа ssh-keygen  Указать другой выходной файл ssh-keygen -f ./path/to/file  Сменить пароль на ключ ssh-keygen -p   ~/.ssh/id_rsa.pub - открытый ключ. Его копируют на сервера, куда нужн">
   
     <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
   
@@ -102,6 +102,9 @@
         <h2 id="Ключи"><a href="#Ключи" class="headerlink" title="Ключи"></a>Ключи</h2><p>Генерация ключа</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
 
+<p>Указать другой выходной файл</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -f ./path/to/file</span><br></pre></td></tr></table></figure>
+
 <p>Сменить пароль на ключ</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -p</span><br></pre></td></tr></table></figure>
 
@@ -157,7 +160,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2015/01/18/ssh-cheat-sheet/" data-id="ck16auc1w0009wwh9dk2csgk4" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2015/01/18/ssh-cheat-sheet/" data-id="ck52p6dbv000ls8h91hczzhqj" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -269,7 +272,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 DmitriyMX<br>
+      &copy; 2020 DmitriyMX<br>
       Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
