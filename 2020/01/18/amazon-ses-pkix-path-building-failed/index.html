@@ -3,20 +3,20 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Как отключить ping отклик на Linux | DmitriyMX Blog</title>
+  <title>Amazon SES: PKIX path building failed | DmitriyMX Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Для отключения пинга, из-под root‘а выполняем следующую команду: echo 1 &amp;gt;/proc/sys/net/ipv4/icmp_echo_ignore_all  Что бы обратно включить ping, меняем 1 на 0 echo 0 &amp;gt;/proc/sys/net/ipv4/icmp_echo">
-<meta name="keywords" content="linux,ping">
+  <meta name="description" content="Проблема: при попытке отправить email через Amazon SES, приложение валит ошибками вида PKIX path building failed. Причины: банально, но похоже у вас “протух” сертификат “амазона”. Когда я столкнулся с">
+<meta name="keywords" content="java,amason,aws,jks,certificate">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Как отключить ping отклик на Linux">
-<meta property="og:url" content="https://dmitriymx.ru/2014/12/26/disable-ping-linux/index.html">
+<meta property="og:title" content="Amazon SES: PKIX path building failed">
+<meta property="og:url" content="https://dmitriymx.ru/2020/01/18/amazon-ses-pkix-path-building-failed/index.html">
 <meta property="og:site_name" content="DmitriyMX Blog">
-<meta property="og:description" content="Для отключения пинга, из-под root‘а выполняем следующую команду: echo 1 &amp;gt;/proc/sys/net/ipv4/icmp_echo_ignore_all  Что бы обратно включить ping, меняем 1 на 0 echo 0 &amp;gt;/proc/sys/net/ipv4/icmp_echo">
+<meta property="og:description" content="Проблема: при попытке отправить email через Amazon SES, приложение валит ошибками вида PKIX path building failed. Причины: банально, но похоже у вас “протух” сертификат “амазона”. Когда я столкнулся с">
 <meta property="og:locale" content="ru">
-<meta property="og:updated_time" content="2019-07-13T13:38:05.593Z">
+<meta property="og:updated_time" content="2020-01-18T17:11:22.195Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Как отключить ping отклик на Linux">
-<meta name="twitter:description" content="Для отключения пинга, из-под root‘а выполняем следующую команду: echo 1 &amp;gt;/proc/sys/net/ipv4/icmp_echo_ignore_all  Что бы обратно включить ping, меняем 1 на 0 echo 0 &amp;gt;/proc/sys/net/ipv4/icmp_echo">
+<meta name="twitter:title" content="Amazon SES: PKIX path building failed">
+<meta name="twitter:description" content="Проблема: при попытке отправить email через Amazon SES, приложение валит ошибками вида PKIX path building failed. Причины: банально, но похоже у вас “протух” сертификат “амазона”. Когда я столкнулся с">
   
     <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
   
@@ -73,10 +73,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-disable-ping-linux" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-amazon-ses-pkix-path-building-failed" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/12/26/disable-ping-linux/" class="article-date">
-  <time datetime="2014-12-26T17:57:49.000Z" itemprop="datePublished">2014-12-26</time>
+    <a href="/2020/01/18/amazon-ses-pkix-path-building-failed/" class="article-date">
+  <time datetime="2020-01-18T16:55:33.000Z" itemprop="datePublished">2020-01-18</time>
 </a>
     
   </div>
@@ -87,7 +87,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Как отключить ping отклик на Linux
+      Amazon SES: PKIX path building failed
     </h1>
   
 
@@ -95,32 +95,38 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Для отключения пинга, из-под <strong>root</strong>‘а выполняем следующую команду:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo 1 &gt;/proc/sys/net/ipv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure>
+        <p><strong>Проблема:</strong> при попытке отправить email через Amazon SES, приложение валит ошибками вида <code>PKIX path building failed</code>.</p>
+<p><strong>Причины:</strong> банально, но похоже у вас “протух” сертификат “амазона”.</p>
+<p>Когда я столкнулся с этой проблемой, java-приложение использовало контейнер сертифитатов формата <a href="https://javadev.ru/https/ssl-keystore-java/" target="_blank" rel="noopener">JKS</a>. И когда я его пролистал, то подозрение по истёкшему сертификату подтвердилось. Решение напрашивается само собой: импортировать в контейнер свежий/актульный сертификат. Вот только где его взять?</p>
+<p><strong>Решение:</strong></p>
+<ol>
+<li>В терминале на сервере <em>(ну или можете у себя локально в linux среде)</em> выполнить команду:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl s_client -connect email.eu-west-1.amazonaws.com:443</span><br></pre></td></tr></table></figure>
 
-<p>Что бы обратно включить ping, меняем 1 на 0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo 0 &gt;/proc/sys/net/ipv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure>
+<p>Адрес и порт <code>email.eu-west-1.amazonaws.com:443</code> у вас может быть другим - смотрите по ситуации.</p>
+<p>На выходе команды получим много текста, но нам нужен только блок сертификата:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">. . .</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
 
-<p>Так же можно воспользоваться для этих целей <strong>iptables</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">iptables -I INPUT -p icmp -j DROP</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>Сохраняем этот сертификат <em>(вместе с <code>BEGIN</code> и <code>END</code> стоками)</em> в файл <code>aws_ses.crt</code></p>
+</li>
+<li><p>Импортируем этот сертификат в контейнер сертификатов:</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -import -file aws_ses.crt -alias 'aws ses' -keystore tls/keystore.jks</span><br></pre></td></tr></table></figure>
 
-<p>Но в отличии от “редактирования” файла <code>icmp_echo_ignore_all</code>, <strong>iptables</strong> позволяет запретить пинг только на определенном сетевом интерфейсе:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">iptables -I INPUT -i eth0 -p icmp -j DROP</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>Источники:</p>
-<ul>
-<li><a href="http://linux-notes.org/kak-otklyuchit-ping-otklika-na-linux/" target="_blank" rel="noopener">linux-notes.org</a></li>
-<li><a href="http://forum.ubuntu.ru/index.php?topic=198507.0" target="_blank" rel="noopener">forum.ubuntu.ru</a></li>
-</ul>
+<p>Будет вначале запрошен пароль от <code>keystore.jks</code>, затем спросят <em>“хотим ли мы доверять импортированному сертификату”</em>. Отвечаем <code>yes</code>.</p>
+<p><strong>Enjoy.</strong></p>
+<p>Теперь письма должны отправляться.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/26/disable-ping-linux/" data-id="ck5juhzwa0005pkh9zmrjx5rw" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2020/01/18/amazon-ses-pkix-path-building-failed/" data-id="ck5juibjo00007sh9psd2h0u9" class="article-share-link">Поделиться</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ping/">ping</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/amason/">amason</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jks/">jks</a></li></ul>
 
     </footer>
   </div>
@@ -128,19 +134,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/01/15/dd-examples/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Следующий</strong>
-      <div class="article-nav-title">
-        
-          Примеры использования команды dd
-        
-      </div>
-    </a>
   
-  
-    <a href="/2014/12/24/nginx-http-basic-auth/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/01/18/screen-example/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Предыдущий</strong>
-      <div class="article-nav-title">Nginx и HTTP Auth basic</div>
+      <div class="article-nav-title">Шпаргалка по SCREEN</div>
     </a>
   
 </nav>

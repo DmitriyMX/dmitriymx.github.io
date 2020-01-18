@@ -3,20 +3,18 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Как отключить ping отклик на Linux | DmitriyMX Blog</title>
+  <title>Метка: certificate | DmitriyMX Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Для отключения пинга, из-под root‘а выполняем следующую команду: echo 1 &amp;gt;/proc/sys/net/ipv4/icmp_echo_ignore_all  Что бы обратно включить ping, меняем 1 на 0 echo 0 &amp;gt;/proc/sys/net/ipv4/icmp_echo">
-<meta name="keywords" content="linux,ping">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Как отключить ping отклик на Linux">
-<meta property="og:url" content="https://dmitriymx.ru/2014/12/26/disable-ping-linux/index.html">
+  <meta name="description" content="Бложик Java программиста">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DmitriyMX Blog">
+<meta property="og:url" content="https://dmitriymx.ru/tags/certificate/index.html">
 <meta property="og:site_name" content="DmitriyMX Blog">
-<meta property="og:description" content="Для отключения пинга, из-под root‘а выполняем следующую команду: echo 1 &amp;gt;/proc/sys/net/ipv4/icmp_echo_ignore_all  Что бы обратно включить ping, меняем 1 на 0 echo 0 &amp;gt;/proc/sys/net/ipv4/icmp_echo">
+<meta property="og:description" content="Бложик Java программиста">
 <meta property="og:locale" content="ru">
-<meta property="og:updated_time" content="2019-07-13T13:38:05.593Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Как отключить ping отклик на Linux">
-<meta name="twitter:description" content="Для отключения пинга, из-под root‘а выполняем следующую команду: echo 1 &amp;gt;/proc/sys/net/ipv4/icmp_echo_ignore_all  Что бы обратно включить ping, меняем 1 на 0 echo 0 &amp;gt;/proc/sys/net/ipv4/icmp_echo">
+<meta name="twitter:title" content="DmitriyMX Blog">
+<meta name="twitter:description" content="Бложик Java программиста">
   
     <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
   
@@ -73,80 +71,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-disable-ping-linux" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/12/26/disable-ping-linux/" class="article-date">
-  <time datetime="2014-12-26T17:57:49.000Z" itemprop="datePublished">2014-12-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      Как отключить ping отклик на Linux
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/01/18/amazon-ses-pkix-path-building-failed/" class="archive-article-date">
+  <time datetime="2020-01-18T16:55:33.000Z" itemprop="datePublished">янв. 18</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/01/18/amazon-ses-pkix-path-building-failed/">Amazon SES: PKIX path building failed</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Для отключения пинга, из-под <strong>root</strong>‘а выполняем следующую команду:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo 1 &gt;/proc/sys/net/ipv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure>
-
-<p>Что бы обратно включить ping, меняем 1 на 0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo 0 &gt;/proc/sys/net/ipv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure>
-
-<p>Так же можно воспользоваться для этих целей <strong>iptables</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">iptables -I INPUT -p icmp -j DROP</span><br></pre></td></tr></table></figure>
-
-<p>Но в отличии от “редактирования” файла <code>icmp_echo_ignore_all</code>, <strong>iptables</strong> позволяет запретить пинг только на определенном сетевом интерфейсе:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">iptables -I INPUT -i eth0 -p icmp -j DROP</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>Источники:</p>
-<ul>
-<li><a href="http://linux-notes.org/kak-otklyuchit-ping-otklika-na-linux/" target="_blank" rel="noopener">linux-notes.org</a></li>
-<li><a href="http://forum.ubuntu.ru/index.php?topic=198507.0" target="_blank" rel="noopener">forum.ubuntu.ru</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/26/disable-ping-linux/" data-id="ck5juhzwa0005pkh9zmrjx5rw" class="article-share-link">Поделиться</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ping/">ping</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/01/15/dd-examples/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Следующий</strong>
-      <div class="article-nav-title">
-        
-          Примеры использования команды dd
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2014/12/24/nginx-http-basic-auth/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Предыдущий</strong>
-      <div class="article-nav-title">Nginx и HTTP Auth basic</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         
