@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Шпаргалка по SCREEN | DmitriyMX Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="table.screen-options tr td:first-child {         font-weight: bold;         text-align: right;         padding-right: 1em;         width: 4em;         white-space: nowrap;         vertical-align:">
+<meta name="keywords" content="linux,screen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Шпаргалка по SCREEN">
+<meta property="og:url" content="https://dmitriymx.ru/2020/01/18/screen-example/index.html">
+<meta property="og:site_name" content="DmitriyMX Blog">
+<meta property="og:description" content="table.screen-options tr td:first-child {         font-weight: bold;         text-align: right;         padding-right: 1em;         width: 4em;         white-space: nowrap;         vertical-align:">
+<meta property="og:locale" content="ru">
+<meta property="og:updated_time" content="2020-01-18T16:01:01.999Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Шпаргалка по SCREEN">
+<meta name="twitter:description" content="table.screen-options tr td:first-child {         font-weight: bold;         text-align: right;         padding-right: 1em;         width: 4em;         white-space: nowrap;         vertical-align:">
+  
+    <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(55548667, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/55548667" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->  
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DmitriyMX Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Бложик Java программиста</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://dmitriymx.ru"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-screen-example" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/18/screen-example/" class="article-date">
+  <time datetime="2020-01-18T16:01:01.000Z" itemprop="datePublished">2020-01-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Шпаргалки/">Шпаргалки</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Шпаргалка по SCREEN
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <style type="text/css">
+    table.screen-options tr td:first-child {
+        font-weight: bold;
+        text-align: right;
+        padding-right: 1em;
+        width: 4em;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    kbd {
+        margin: 0px 0.1em;
+        padding: 0.1em 0.6em;
+        border-radius: 3px;
+        border: 1px solid rgb(204, 204, 204);
+        color: rgb(51, 51, 51);
+        line-height: 1.4;
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 10px;
+        display: inline-block;
+        box-shadow: 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 2px #ffffff;
+        background-color: rgb(247, 247, 247);
+        text-shadow: 0 1px 0 #fff;
+    }
+</style>
+
+<h2 id="Синтаксис"><a href="#Синтаксис" class="headerlink" title="Синтаксис"></a>Синтаксис</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen [options] [command]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Параметры"><a href="#Параметры" class="headerlink" title="Параметры"></a>Параметры</h3><table class="screen-options">
+    <tr><td>-d</td><td>создать сеанс в detached режиме. Это значит, что "скрин" будет создан в фоне.</td></tr>
+    <tr><td>-S</td><td>указание названия для вновь созданного "скрина"</td></tr>
+    <tr><td>-ls</td><td>список доступных сеансов</td></tr>
+    <tr><td>-wipe</td><td>очистить список от "мертвых" сеансов</td></tr>
+    <tr><td>-x</td><td>подключится к сеансу по его pid его названию</td></tr>
+    <tr><td>-X</td><td>выполнить screen-комманду внутри сеанса, не подключаясь к нему</td></tr>
+    <tr><td>[command]</td><td>это команда, выполняемая сразу по запуску screen-сеанса.</td></tr>
+</table>
+
+<a id="more"></a>
+
+<h2 id="Примеры-использования"><a href="#Примеры-использования" class="headerlink" title="Примеры использования"></a>Примеры использования</h2><h3 id="Запустить-в-фоне"><a href="#Запустить-в-фоне" class="headerlink" title="Запустить в фоне"></a>Запустить в фоне</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -dmS screen_name htop</span><br></pre></td></tr></table></figure>
+
+<h3 id="Отправить-команду-в-открытый-в-фоне-скрин"><a href="#Отправить-команду-в-открытый-в-фоне-скрин" class="headerlink" title="Отправить команду в открытый в фоне скрин"></a>Отправить команду в открытый в фоне скрин</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S screen_name -X stuff 'echo "hello" &gt; ~/test.txt'`echo -ne '\015'`</span><br><span class="line">screen -S screen_name -X stuff 'echo "hello" &gt; ~/test.txt'$(echo -ne '\015')</span><br><span class="line">screen -S screen_name -X stuff "echo \"hello\" &gt; ~/test.txt\015"</span><br></pre></td></tr></table></figure>
+
+<p>где</p>
+<dl>
+    <dt><code>'echo "hello" > ~/test.txt'</code></dt>
+    <dd>комманда</dd>
+    <dt><code>`echo -ne '\015'`</code></dt>
+    <dd>отправка кода "enter" (как если бы нажали клавишу <rbd>Enter</rbd>)</dd></dl>
+
+
+<p>если набор идет вручную, то “enter” отправляется через <kbd>Ctrl</kbd> + <kbd>M</kbd>.</p>
+<h2 id="Комманды"><a href="#Комманды" class="headerlink" title="Комманды"></a>Комманды</h2><p>Все клавиатурные комманды указываются после нажатия <kbd>Ctrl</kbd> + <kbd>A</kbd>.</p>
+<p><strong>Комманды общего назначения</strong></p>
+<table class="screen-options">
+    <tr><td><kbd>:</kbd></td><td>Ввод текстовой комманды</td></tr>
+    <tr><td><kbd>D</kbd></td><td>отключиться от текущего сеанса</td></tr>
+    <tr><td><kbd>X</kbd></td><td>заблокировать сеанс.<br>После этого screen перестаёт реагировать на любые комманды, пока не будет введен пароль пользователя, от имени которого был запущен сеанс.</td></tr>
+    <tr><td><kbd>K</kbd></td><td>"убить" текущее screen-окно.<br>Если screen-окно единственное, сеанс завершится.<br><i>Полезно, если сеанс не завершается штатными способами</i></td></tr>
+</table>
+
+<p><strong>Комманды работы со screen-окном</strong><br><em>(не путать с сеансом)</em></p>
+<table class="screen-options">
+    <tr><td><kbd>C</kbd></td><td>новые окно</td></tr>
+    <tr><td><kbd>W</kbd></td><td>список окон</td></tr>
+    <tr><td><kbd>0</kbd> - <kbd>9</kbd></td><td>переключение на окно из списка</td></tr>
+    <tr><td><kbd>"</kbd></td><td>меню выбора окон</td></tr>
+    <tr><td><kbd>N</kbd></td><td>следующее окно</td></tr>
+    <tr><td><kbd>P</kbd></td><td>предыдущее окно</td></tr>
+    <tr><td><kbd>Shift</kbd> + <kbd>A</kbd></td><td>переименовать текущее окно</td></tr>    
+</table>
+
+<p><strong>Комманды работы с регионами</strong><br><em>(на заметку: разметка регионов не сохраняется после отключения от сеанса)</em></p>
+<table class="screen-options">
+    <tr><td><kbd>Shift</kbd> + <kbd>S</kbd></td><td>разделить горизонтально</td></tr>
+    <tr><td><kbd>|</kbd></td><td>разделить вертикально</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>переключаться между регионами</td></tr>
+    <tr><td><kbd>Shift</kbd> + <kbd>X</kbd></td><td>закрыть регион</td></tr>
+    <tr><td><kbd>Shift</kbd> + <kbd>Q</kbd></td><td>закрыть все регионы, кроме текущего(в фокусе)</td></tr>
+</table>
+
+<h2 id="Источники"><a href="#Источники" class="headerlink" title="Источники"></a>Источники</h2><ul>
+<li><a href="https://help.ubuntu.ru/wiki/screen" target="_blank" rel="noopener">https://help.ubuntu.ru/wiki/screen</a></li>
+<li><a href="https://admins.su/kak-polzovatsya-utilitoj-screen-v-linux/" target="_blank" rel="noopener">https://admins.su/kak-polzovatsya-utilitoj-screen-v-linux/</a></li>
+<li><a href="https://losst.ru/komanda-screen-linux" target="_blank" rel="noopener">https://losst.ru/komanda-screen-linux</a></li>
+<li><a href="http://xgu.ru/wiki/man:screen" target="_blank" rel="noopener">http://xgu.ru/wiki/man:screen</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dmitriymx.ru/2020/01/18/screen-example/" data-id="ck5js9eo4000910h9bdl5l6f9" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/screen/">screen</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/30/blog-recovery/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Восстановление блога</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Self/">Self</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Шпаргалки/">Шпаргалки</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/screen/">screen</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/screen/" style="font-size: 10px;">screen</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">январь 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">сентябрь 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">февраль 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">январь 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">декабрь 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/18/screen-example/">Шпаргалка по SCREEN</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/30/blog-recovery/">Восстановление блога</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/15/dd-examples/">Примеры использования команды dd</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 DmitriyMX<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
