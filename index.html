@@ -73,6 +73,65 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-import-lets-encrypt-to-jks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/18/import-lets-encrypt-to-jks/" class="article-date">
+  <time datetime="2020-01-18T17:15:24.000Z" itemprop="datePublished">2020-01-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/18/import-lets-encrypt-to-jks/">Импорт сертификатов Let&#39;s Encrypt в JKS</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Дано:</strong></p>
+<ul>
+<li><code>fullchain3.pem</code></li>
+<li><code>privkey3.pem</code></li>
+</ul>
+<p><strong>Импортируем:</strong></p>
+<ol>
+<li>Конвертируем сертификаты <code>pem</code> в <code>p12</code> (PKCS12):</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl pkcs12 -export -in fullchain3.pem -inkey privkey3.pem -out pkcs.p12 -name "Let's Encrypt"</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Импортируем <code>p12</code> в <code>jks</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore pkcs.p12 -srcstoretype PKCS12 -destkeystore keystore.jks</span><br></pre></td></tr></table></figure>
+
+<p><strong>Enjoy.</strong></p>
+<p>Для проверки, можно выполнить команду</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -list -v -keystore keystore.jks -storepass keyStorePassword</span><br></pre></td></tr></table></figure>
+
+<p>В листинге искать “Alias name: Let’s Encrypt”</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dmitriymx.ru/2020/01/18/import-lets-encrypt-to-jks/" data-id="ck5juxiz900062gh9evja9oxt" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jks/">jks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/let-s-encrypt/">let's encrypt</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-amazon-ses-pkix-path-building-failed" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/18/amazon-ses-pkix-path-building-failed/" class="article-date">
@@ -123,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2020/01/18/amazon-ses-pkix-path-building-failed/" data-id="ck5juibjo00007sh9psd2h0u9" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2020/01/18/amazon-ses-pkix-path-building-failed/" data-id="ck5juxiyu00002gh932p4kiey" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/amazon/">amazon</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jks/">jks</a></li></ul>
@@ -180,7 +239,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2020/01/18/screen-example/" data-id="ck5juhzwd0008pkh9ub6f6jly" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2020/01/18/screen-example/" data-id="ck5juxizj000g2gh97mbhyowv" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/screen/">screen</a></li></ul>
@@ -224,7 +283,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2019/09/30/blog-recovery/" data-id="ck5juhzw30001pkh90tzc74ws" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2019/09/30/blog-recovery/" data-id="ck5juxiz000012gh992lmznxc" class="article-share-link">Поделиться</a>
       
       
     </footer>
@@ -269,7 +328,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2015/02/16/java-classloader/" data-id="ck5juhzwy000zpkh9qj4oc4xc" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2015/02/16/java-classloader/" data-id="ck5juxj03001i2gh9t6uhwakh" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/classloader/">classloader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -333,7 +392,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2015/01/18/ssh-cheat-sheet/" data-id="ck5juhzwe000apkh9dxlxlz70" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2015/01/18/ssh-cheat-sheet/" data-id="ck5juxize000c2gh95t4lpy5z" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -384,7 +443,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2015/01/15/dd-examples/" data-id="ck5juhzw70003pkh9et2pgd21" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2015/01/15/dd-examples/" data-id="ck5juxiz600032gh9t5wazx5f" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dd/">dd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
@@ -440,7 +499,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/26/disable-ping-linux/" data-id="ck5juhzwa0005pkh9zmrjx5rw" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2014/12/26/disable-ping-linux/" data-id="ck5juxiz800052gh9ym0aad9v" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ping/">ping</a></li></ul>
@@ -508,7 +567,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/24/nginx-http-basic-auth/" data-id="ck5juhzwb0006pkh9uv4sm0i2" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2014/12/24/nginx-http-basic-auth/" data-id="ck5juxizb00082gh9f3q4ie8r" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
@@ -562,67 +621,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/24/file-as-disk/" data-id="ck5juhzvu0000pkh9v6c3mmgd" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2014/12/24/file-as-disk/" data-id="ck5juxizd000a2gh9oo01kdwa" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dd/">dd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-virtualbox-rawdisk" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/12/23/virtualbox-rawdisk/" class="article-date">
-  <time datetime="2014-12-23T20:55:33.000Z" itemprop="datePublished">2014-12-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/23/virtualbox-rawdisk/">Работа с физическими носителями в VirtualBox</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <img src="/2014/12/23/virtualbox-rawdisk/virtualbox_hdd.png">
-
-<p><em>Заранее хочется предупредить, что работая с физическими носителями через виртуальную машину вы рискуете всё запороть. Все ваши действия производятся на ваш страх и риск. Я предупредил.</em></p>
-<p>По сути, работа с физическими носителями ничем не отличается от работы с виртуальными аналогами, за исключением не возможности делать snapshots. Вернее можно, но не рекомендуется от слова <em>совсем</em>.</p>
-<p><em>- Зачем это нужно?</em></p>
-<p>Ответ простой, как и сам вопрос: работа в двух операционных системах, одна из которых находится на физическом носителе. Например LiveUSB или Linux, которая находится на соседнем разделе диска. Причин использовать этот механизм может быть много. Но перейдем же к исполнению нашей “хотелки”.</p>
-<p>Для начала нам нужно узнать адрес, по которому можно будет напрямую обратиться к носителю. После чего запускаем команду по созданию некой “ссылки” на наш носитель.</p>
-<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">C:\&gt; wmic diskdrive list brief</span><br><span class="line">Caption                   DeviceID            Model                     Partitions  Size</span><br><span class="line">VBOX HARDDISK ATA Device  \\.\PHYSICALDRIVE0  VBOX HARDDISK ATA Device  3           500105249280</span><br><span class="line">C:\&gt; VBoxManage internalcommands createrawvmdk -filename C:\mydrive.vmdk -rawdisk \\.\PHYSICALDRIVE0</span><br></pre></td></tr></table></figure>
-
-<p>Так же можно вместо целого диска, подключать только его разделы. Для этого добавьте параметр <code>--partitions</code> и через запятую перечислите номера разделов</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">C:\&gt; VBoxManage internalcommands createrawvmdk -filename C:\mydrive.vmdk -rawdisk \\.\PHYSICALDRIVE0 -partitions 1,3</span><br></pre></td></tr></table></figure>
-
-<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vboxmanage internalcommands createrawvmdk -filename /var/mydrive.vmdk -rawdisk /dev/sda</span><br></pre></td></tr></table></figure>
-
-<p>Обязательно добавить пользователя, от имени которого будет запускаться <code>virtualbox</code>, в группы <code>vboxusers</code> и <code>disk</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">usermod -a -G vboxusers,disk $(whoami)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>Далее подключаем нашу “ссылку” mydrive.vmdk к VM как обычный диск и работаем.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/23/virtualbox-rawdisk/" data-id="ck5juhzww000ypkh92to7q5ey" class="article-share-link">Поделиться</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
 
     </footer>
   </div>
@@ -656,7 +658,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Метки</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon/">amazon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/certificate/">certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jks/">jks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/screen/">screen</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon/">amazon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/certificate/">certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jks/">jks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/let-s-encrypt/">let's encrypt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/screen/">screen</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
     </div>
   </div>
 
@@ -666,7 +668,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Облако меток</h3>
     <div class="widget tagcloud">
-      <a href="/tags/amazon/" style="font-size: 10px;">amazon</a> <a href="/tags/aws/" style="font-size: 10px;">aws</a> <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/certificate/" style="font-size: 10px;">certificate</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jks/" style="font-size: 10px;">jks</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/screen/" style="font-size: 10px;">screen</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+      <a href="/tags/amazon/" style="font-size: 10px;">amazon</a> <a href="/tags/aws/" style="font-size: 10px;">aws</a> <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/certificate/" style="font-size: 15px;">certificate</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 15px;">dd</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jks/" style="font-size: 15px;">jks</a> <a href="/tags/let-s-encrypt/" style="font-size: 10px;">let's encrypt</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/screen/" style="font-size: 10px;">screen</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
     </div>
   </div>
 
@@ -688,6 +690,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/18/import-lets-encrypt-to-jks/">Импорт сертификатов Let&#39;s Encrypt в JKS</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/18/amazon-ses-pkix-path-building-failed/">Amazon SES: PKIX path building failed</a>
           </li>
         
@@ -701,10 +707,6 @@
         
           <li>
             <a href="/2015/02/16/java-classloader/">Classloader: динамичкеская загрузка классов</a>
-          </li>
-        
-          <li>
-            <a href="/2015/01/18/ssh-cheat-sheet/">Шпаргалка по SSH</a>
           </li>
         
       </ul>

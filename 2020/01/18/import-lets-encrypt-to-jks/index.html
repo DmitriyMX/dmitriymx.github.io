@@ -3,18 +3,20 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Метка: nginx | DmitriyMX Blog</title>
+  <title>Импорт сертификатов Let&#39;s Encrypt в JKS | DmitriyMX Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Бложик Java программиста">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DmitriyMX Blog">
-<meta property="og:url" content="https://dmitriymx.ru/tags/nginx/index.html">
+  <meta name="description" content="Дано:  fullchain3.pem privkey3.pem  Импортируем:  Конвертируем сертификаты pem в p12 (PKCS12):  openssl pkcs12 -export -in fullchain3.pem -inkey privkey3.pem -out pkcs.p12 -name &quot;Let&apos;s Encrypt&quot;   Импо">
+<meta name="keywords" content="jks,certificate,let&#39;s encrypt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Импорт сертификатов Let&#39;s Encrypt в JKS">
+<meta property="og:url" content="https://dmitriymx.ru/2020/01/18/import-lets-encrypt-to-jks/index.html">
 <meta property="og:site_name" content="DmitriyMX Blog">
-<meta property="og:description" content="Бложик Java программиста">
+<meta property="og:description" content="Дано:  fullchain3.pem privkey3.pem  Импортируем:  Конвертируем сертификаты pem в p12 (PKCS12):  openssl pkcs12 -export -in fullchain3.pem -inkey privkey3.pem -out pkcs.p12 -name &quot;Let&apos;s Encrypt&quot;   Импо">
 <meta property="og:locale" content="ru">
+<meta property="og:updated_time" content="2020-01-18T17:21:50.441Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DmitriyMX Blog">
-<meta name="twitter:description" content="Бложик Java программиста">
+<meta name="twitter:title" content="Импорт сертификатов Let&#39;s Encrypt в JKS">
+<meta name="twitter:description" content="Дано:  fullchain3.pem privkey3.pem  Импортируем:  Конвертируем сертификаты pem в p12 (PKCS12):  openssl pkcs12 -export -in fullchain3.pem -inkey privkey3.pem -out pkcs.p12 -name &quot;Let&apos;s Encrypt&quot;   Импо">
   
     <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
   
@@ -71,40 +73,74 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/24/nginx-http-basic-auth/" class="archive-article-date">
-  <time datetime="2014-12-23T21:08:33.000Z" itemprop="datePublished">дек. 24</time>
+        <section id="main"><article id="post-import-lets-encrypt-to-jks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/18/import-lets-encrypt-to-jks/" class="article-date">
+  <time datetime="2020-01-18T17:15:24.000Z" itemprop="datePublished">2020-01-18</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+    <h1 class="article-title" itemprop="name">
+      Импорт сертификатов Let&#39;s Encrypt в JKS
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Дано:</strong></p>
+<ul>
+<li><code>fullchain3.pem</code></li>
+<li><code>privkey3.pem</code></li>
+</ul>
+<p><strong>Импортируем:</strong></p>
+<ol>
+<li>Конвертируем сертификаты <code>pem</code> в <code>p12</code> (PKCS12):</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl pkcs12 -export -in fullchain3.pem -inkey privkey3.pem -out pkcs.p12 -name "Let's Encrypt"</span><br></pre></td></tr></table></figure>
 
+<ol start="2">
+<li>Импортируем <code>p12</code> в <code>jks</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore pkcs.p12 -srcstoretype PKCS12 -destkeystore keystore.jks</span><br></pre></td></tr></table></figure>
+
+<p><strong>Enjoy.</strong></p>
+<p>Для проверки, можно выполнить команду</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -list -v -keystore keystore.jks -storepass keyStorePassword</span><br></pre></td></tr></table></figure>
+
+<p>В листинге искать “Alias name: Let’s Encrypt”</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dmitriymx.ru/2020/01/18/import-lets-encrypt-to-jks/" data-id="ck5juxiz900062gh9evja9oxt" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jks/">jks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/let-s-encrypt/">let's encrypt</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/18/amazon-ses-pkix-path-building-failed/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Amazon SES: PKIX path building failed</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
