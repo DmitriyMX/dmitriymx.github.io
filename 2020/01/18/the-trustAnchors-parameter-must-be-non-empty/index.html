@@ -3,18 +3,20 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Архив | DmitriyMX Blog</title>
+  <title>the trustAnchors parameter must be non-empty | DmitriyMX Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Бложик Java программиста">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DmitriyMX Blog">
-<meta property="og:url" content="https://dmitriymx.ru/archives/page/2/index.html">
+  <meta name="description" content="При при использовании распакованной версии OpenJDK 8, столкнулся с проблемой, что любое обращение к HTTPS обращается ошибками вида:  java.security.InvalidAlgorithmParameterException: the trustAnchors">
+<meta name="keywords" content="certificate,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="the trustAnchors parameter must be non-empty">
+<meta property="og:url" content="https://dmitriymx.ru/2020/01/18/the-trustAnchors-parameter-must-be-non-empty/index.html">
 <meta property="og:site_name" content="DmitriyMX Blog">
-<meta property="og:description" content="Бложик Java программиста">
+<meta property="og:description" content="При при использовании распакованной версии OpenJDK 8, столкнулся с проблемой, что любое обращение к HTTPS обращается ошибками вида:  java.security.InvalidAlgorithmParameterException: the trustAnchors">
 <meta property="og:locale" content="ru">
+<meta property="og:updated_time" content="2020-01-18T18:00:18.468Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DmitriyMX Blog">
-<meta name="twitter:description" content="Бложик Java программиста">
+<meta name="twitter:title" content="the trustAnchors parameter must be non-empty">
+<meta name="twitter:description" content="При при использовании распакованной версии OpenJDK 8, столкнулся с проблемой, что любое обращение к HTTPS обращается ошибками вида:  java.security.InvalidAlgorithmParameterException: the trustAnchors">
   
     <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
   
@@ -71,83 +73,69 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/24/file-as-disk/" class="archive-article-date">
-  <time datetime="2014-12-23T21:04:01.000Z" itemprop="datePublished">дек. 24</time>
+        <section id="main"><article id="post-the-trustAnchors-parameter-must-be-non-empty" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/18/the-trustAnchors-parameter-must-be-non-empty/" class="article-date">
+  <time datetime="2020-01-18T17:28:31.000Z" itemprop="datePublished">2020-01-18</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/24/file-as-disk/">Работа с файлами как с дисками</a>
+    <h1 class="article-title" itemprop="name">
+      the trustAnchors parameter must be non-empty
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/23/virtualbox-rawdisk/" class="archive-article-date">
-  <time datetime="2014-12-23T20:55:33.000Z" itemprop="datePublished">дек. 23</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/23/virtualbox-rawdisk/">Работа с физическими носителями в VirtualBox</a>
-    </h1>
-  
+        <p>При при использовании <a href="https://jdk.java.net/java-se-ri/8" target="_blank" rel="noopener">распакованной версии</a> <strong>OpenJDK 8</strong>, столкнулся с проблемой, что любое обращение к HTTPS обращается ошибками вида: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/14/end-of-era-craftbukkit/" class="archive-article-date">
-  <time datetime="2014-12-14T14:31:59.000Z" itemprop="datePublished">дек. 14</time>
-</a>
+<p>Гугление предлагает в основном только однотипные решения: переустановить <code>ca-certificates-java</code> или “колдунства” вокруг команды <code>update-ca-certificates</code>. Однако проблема и её решение на деле оказались еще более банальными чем предполагалось ранее.</p>
+<p>Дело в том, что в <a href="https://jdk.java.net/java-se-ri/8" target="_blank" rel="noopener">распакованной версии</a> <strong>OpenJDK 8</strong> контейнер сертификатов <code>openjdk-8/jre/lib/security/cacerts</code> просто пуст:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -v -list -keystore openjdk-8/jre/lib/security/cacerts -storepass changeit</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Keystore type: JKS</span><br><span class="line">Keystore provider: SUN</span><br><span class="line"></span><br><span class="line">Your keystore contains 0 entries</span><br></pre></td></tr></table></figure>
+
+<p>А вот в <a href="https://jdk.java.net/java-se-ri/11" target="_blank" rel="noopener">распакованной версии</a> <strong>OpenJDK 11</strong> (например) с этим всё в порядке:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -v -list -keystore openjdk-11/lib/security/cacerts -storepass changeit</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Keystore type: JKS</span><br><span class="line">Keystore provider: SUN</span><br><span class="line"></span><br><span class="line">Your keystore contains 92 entries</span><br><span class="line">. . .</span><br></pre></td></tr></table></figure>
+
+<h2 id="Решение"><a href="#Решение" class="headerlink" title="Решение"></a>Решение</h2><p>При запуске java-приложения нужно добавить параметр <code>javax.net.ssl.trustStore</code>, который будет указывать на <code>cacerts</code> с актуальными сертификатами:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/opt/openjdk-8/bin/java -Djavax.net.ssl.trustStore=/opt/openjdk-11/lib/security/cacerts -jar someApp.jar</span><br></pre></td></tr></table></figure>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/14/end-of-era-craftbukkit/">Конец эпохи CraftBukkit</a>
-    </h1>
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dmitriymx.ru/2020/01/18/the-trustAnchors-parameter-must-be-non-empty/" data-id="ck5jvd7r2000gx0h9hd8x6l8b" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/archives/">&laquo; Назад</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-  </nav>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/18/import-lets-encrypt-to-jks/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">Импорт сертификатов Let&#39;s Encrypt в JKS</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
