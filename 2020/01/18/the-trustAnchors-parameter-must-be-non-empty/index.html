@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="DmitriyMX Blog">
 <meta property="og:description" content="При использовании распакованной версии OpenJDK 8, столкнулся с проблемой, что любое обращение к HTTPS обращается ошибками вида:  java.security.InvalidAlgorithmParameterException: the trustAnchors para">
 <meta property="og:locale" content="ru">
-<meta property="og:updated_time" content="2020-01-18T18:30:30.614Z">
+<meta property="og:updated_time" content="2020-01-18T19:07:57.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="the trustAnchors parameter must be non-empty">
 <meta name="twitter:description" content="При использовании распакованной версии OpenJDK 8, столкнулся с проблемой, что любое обращение к HTTPS обращается ошибками вида:  java.security.InvalidAlgorithmParameterException: the trustAnchors para">
@@ -98,8 +98,8 @@
         <p>При использовании <a href="https://jdk.java.net/java-se-ri/8" target="_blank" rel="noopener">распакованной версии</a> <strong>OpenJDK 8</strong>, столкнулся с проблемой, что любое обращение к HTTPS обращается ошибками вида: </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://www.google.com/search?q=the+trustAnchors+parameter+must+be+non-empty" target="_blank" rel="noopener">Гугление</a> предлагает в основном только однотипные решения: переустановить <code>ca-certificates-java</code> или “колдунства” вокруг команды <code>update-ca-certificates</code>. Однако проблема и её решение на деле оказались еще более банальными чем предполагалось ранее.</p>
-<p>Дело в том, что в <a href="https://jdk.java.net/java-se-ri/8" target="_blank" rel="noopener">распакованной версии</a> <strong>OpenJDK 8</strong> контейнер сертификатов <code>openjdk-8/jre/lib/security/cacerts</code> просто пуст:</p>
+<p><a href="https://www.google.com/search?q=the+trustAnchors+parameter+must+be+non-empty" target="_blank" rel="noopener">Гугление</a> предлагает в основном только однотипные решения: переустановить <code>ca-certificates-java</code> или “колдунства” вокруг команды <code>update-ca-certificates</code>. Однако проблема и её решение на деле оказались очень банальными.</p>
+<h2 id="Причины"><a href="#Причины" class="headerlink" title="Причины"></a>Причины</h2><p>Дело в том, что в <a href="https://jdk.java.net/java-se-ri/8" target="_blank" rel="noopener">распакованной версии</a> <strong>OpenJDK 8</strong> контейнер сертификатов <code>openjdk-8/jre/lib/security/cacerts</code> просто пуст:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -v -list -keystore openjdk-8/jre/lib/security/cacerts -storepass changeit</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Keystore type: JKS</span><br><span class="line">Keystore provider: SUN</span><br><span class="line"></span><br><span class="line">Your keystore contains 0 entries</span><br></pre></td></tr></table></figure>
