@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="DmitriyMX Blog">
 <meta property="og:description" content="Синтаксисscreen [options] [command]  Параметры     -dсоздать сеанс в detached режиме. Это значит, что &quot;скрин&quot; будет создан в фоне.     -Sуказание названия для вновь созданного &quot;скрина&quot;     -lsсписок д">
 <meta property="og:locale" content="ru">
-<meta property="og:updated_time" content="2020-01-18T16:24:30.973Z">
+<meta property="og:updated_time" content="2020-01-18T16:35:47.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Шпаргалка по SCREEN">
 <meta name="twitter:description" content="Синтаксисscreen [options] [command]  Параметры     -dсоздать сеанс в detached режиме. Это значит, что &quot;скрин&quot; будет создан в фоне.     -Sуказание названия для вновь созданного &quot;скрина&quot;     -lsсписок д">
@@ -107,7 +107,7 @@
     <tr><td>-ls</td><td>список доступных сеансов</td></tr>
     <tr><td>-wipe</td><td>очистить список от "мертвых" сеансов</td></tr>
     <tr><td>-x</td><td>подключится к сеансу по его pid его названию</td></tr>
-    <tr><td>-X</td><td>выполнить screen-комманду внутри сеанса, не подключаясь к нему</td></tr>
+    <tr><td>-X</td><td>выполнить screen-команду внутри сеанса, не подключаясь к нему</td></tr>
     <tr><td>[command]</td><td>это команда, выполняемая сразу по запуску screen-сеанса.</td></tr>
 </table>
 
@@ -120,18 +120,18 @@
 <p>где</p>
 <dl>
     <dt><code>'echo "hello" > ~/test.txt'</code></dt>
-    <dd>комманда</dd>
+    <dd>команда</dd>
     <dt><code>`echo -ne '\015'`</code></dt>
     <dd>отправка кода "enter" (как если бы нажали клавишу <rbd>Enter</rbd>)</dd></dl>
 
 
 <p>если набор идет вручную, то “enter” отправляется через <kbd>Ctrl</kbd> + <kbd>M</kbd>.</p>
-<h2 id="Комманды"><a href="#Комманды" class="headerlink" title="Комманды"></a>Комманды</h2><p>Все клавиатурные комманды указываются после нажатия <kbd>Ctrl</kbd> + <kbd>A</kbd>.</p>
+<h2 id="Комманды"><a href="#Комманды" class="headerlink" title="Комманды"></a>Комманды</h2><p>Все клавиатурные команды указываются после нажатия <kbd>Ctrl</kbd> + <kbd>A</kbd>.</p>
 <p><strong>Комманды общего назначения</strong></p>
 <table class="screen-options">
-    <tr><td><kbd>:</kbd></td><td>Ввод текстовой комманды</td></tr>
+    <tr><td><kbd>:</kbd></td><td>Ввод текстовой команды</td></tr>
     <tr><td><kbd>D</kbd></td><td>отключиться от текущего сеанса</td></tr>
-    <tr><td><kbd>X</kbd></td><td>заблокировать сеанс.<br>После этого screen перестаёт реагировать на любые комманды, пока не будет введен пароль пользователя, от имени которого был запущен сеанс.</td></tr>
+    <tr><td><kbd>X</kbd></td><td>заблокировать сеанс.<br>После этого screen перестаёт реагировать на любые команды, пока не будет введен пароль пользователя, от имени которого был запущен сеанс.</td></tr>
     <tr><td><kbd>K</kbd></td><td>"убить" текущее screen-окно.<br>Если screen-окно единственное, сеанс завершится.<br><i>Полезно, если сеанс не завершается штатными способами</i></td></tr>
 </table>
 
@@ -165,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2020/01/18/screen-example/" data-id="ck5js9eo4000910h9bdl5l6f9" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2020/01/18/screen-example/" data-id="ck5jtewag0008woh9356fi7sh" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/screen/">screen</a></li></ul>
