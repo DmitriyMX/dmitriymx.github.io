@@ -73,6 +73,74 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-nginx-http-basic-auth" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/12/24/nginx-http-basic-auth/" class="article-date">
+  <time datetime="2014-12-23T21:08:33.000Z" itemprop="datePublished">2014-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Редактируем файл <code>/etc/nginx/nginx.conf</code> и в секции <code>location</code> добавляем такие строки:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    auth_basic &quot;Hello! Enter password&quot;;</span><br><span class="line">    auth_basic_user_file /etc/nginx/nginx.htpasswd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>auth_basic</code> - указываем на включение режима http авторизации;</li>
+<li><code>auth_basic_user_file</code> - указываем пусть к файлу с паролями.</li>
+</ul>
+<p>Файл с паролями имеет следующий синтаксис:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># комментарий</span><br><span class="line">логин1:пароль1</span><br><span class="line">логин2:пароль2:комментарий</span><br></pre></td></tr></table></figure>
+
+<p>Пароли хранятся в зашифрованном виде. <strong>Nginx</strong> поддерживает три типа шифрования: стандартный crypt, апачевский метод и md5. Генерировать пароль можно либо через утилиту <code>htpasswd</code> из пакета Apache, либо через <code>openssl</code>.</p>
+<p>Стандартный метод <strong>nginx</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl passwd -crypt PASSWORD</span><br></pre></td></tr></table></figure>
+
+<p>Метод <strong>Apache2</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl passwd -apr1 PASSWORD</span><br><span class="line">htpasswd -c /etc/nginx/nginx.htpasswd admin</span><br></pre></td></tr></table></figure>
+
+<p><strong>md5</strong> метод:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl passwd -1 PASSWORD</span><br></pre></td></tr></table></figure>
+
+<p>Если необходимо на какой-то суб-директории отключить авторизацию, то вместо пригласительного текста пишем <code>off</code>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location /api/ &#123;</span><br><span class="line">    auth_basic off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Источники:</p>
+<ul>
+<li><a href="http://nginx.org/ru/docs/http/ngx_http_auth_basic_module.html" target="_blank" rel="noopener">nginx.org</a></li>
+<li><a href="http://server-tuning.info/apache/basic-password-auth.html" target="_blank" rel="noopener">server-tuning.info</a></li>
+<li><a href="http://roger.steneteg.org/441/basic-authentication-with-nginx/" target="_blank" rel="noopener">roger.steneteg.org</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dmitriymx.ru/2014/12/24/nginx-http-basic-auth/" data-id="ck5karxc8000618h922ilfe6f" class="article-share-link">Поделиться</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-file-as-disk" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/12/24/file-as-disk/" class="article-date">
@@ -115,7 +183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/24/file-as-disk/" data-id="ck5jvd7qv0008x0h9cvxbwwp5" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2014/12/24/file-as-disk/" data-id="ck5karxce000d18h96hwz41xs" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dd/">dd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
@@ -172,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/23/virtualbox-rawdisk/" data-id="ck5jvd7r5000ix0h9wh00ursd" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2014/12/23/virtualbox-rawdisk/" data-id="ck5karxci000j18h9asj125lr" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
@@ -217,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dmitriymx.ru/2014/12/14/end-of-era-craftbukkit/" data-id="ck5jvd7sh0023x0h9tkb3fgi0" class="article-share-link">Поделиться</a>
+      <a data-url="https://dmitriymx.ru/2014/12/14/end-of-era-craftbukkit/" data-id="ck5karxe5002418h9avwcdc8l" class="article-share-link">Поделиться</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spigot/">spigot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sponge/">sponge</a></li></ul>
@@ -254,7 +322,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Метки</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon/">amazon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/certificate/">certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jks/">jks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/let-s-encrypt/">let's encrypt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/screen/">screen</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon/">amazon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bukkit/">bukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/certificate/">certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classloader/">classloader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/craftbukkit/">craftbukkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dd/">dd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jks/">jks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/let-s-encrypt/">let's encrypt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minecraft/">minecraft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/screen/">screen</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spigot/">spigot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sponge/">sponge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/steam/">steam</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/">virtualbox</a></li></ul>
     </div>
   </div>
 
@@ -264,7 +332,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Облако меток</h3>
     <div class="widget tagcloud">
-      <a href="/tags/amazon/" style="font-size: 10px;">amazon</a> <a href="/tags/aws/" style="font-size: 10px;">aws</a> <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/certificate/" style="font-size: 16.67px;">certificate</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 13.33px;">dd</a> <a href="/tags/java/" style="font-size: 13.33px;">java</a> <a href="/tags/jks/" style="font-size: 13.33px;">jks</a> <a href="/tags/let-s-encrypt/" style="font-size: 10px;">let's encrypt</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/screen/" style="font-size: 10px;">screen</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
+      <a href="/tags/amazon/" style="font-size: 10px;">amazon</a> <a href="/tags/aws/" style="font-size: 10px;">aws</a> <a href="/tags/bukkit/" style="font-size: 10px;">bukkit</a> <a href="/tags/certificate/" style="font-size: 16.67px;">certificate</a> <a href="/tags/classloader/" style="font-size: 10px;">classloader</a> <a href="/tags/craftbukkit/" style="font-size: 10px;">craftbukkit</a> <a href="/tags/dd/" style="font-size: 13.33px;">dd</a> <a href="/tags/java/" style="font-size: 13.33px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jks/" style="font-size: 13.33px;">jks</a> <a href="/tags/let-s-encrypt/" style="font-size: 10px;">let's encrypt</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/minecraft/" style="font-size: 10px;">minecraft</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/screen/" style="font-size: 10px;">screen</a> <a href="/tags/spigot/" style="font-size: 10px;">spigot</a> <a href="/tags/sponge/" style="font-size: 10px;">sponge</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/steam/" style="font-size: 10px;">steam</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a>
     </div>
   </div>
 
@@ -286,6 +354,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/19/remove-steam-hidden-game-from-wishlist/">Удалить скрытую игру в Steam из Списка желаемого</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/18/the-trustAnchors-parameter-must-be-non-empty/">the trustAnchors parameter must be non-empty</a>
           </li>
         
@@ -299,10 +371,6 @@
         
           <li>
             <a href="/2020/01/18/screen-example/">Шпаргалка по SCREEN</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/30/blog-recovery/">Восстановление блога</a>
           </li>
         
       </ul>

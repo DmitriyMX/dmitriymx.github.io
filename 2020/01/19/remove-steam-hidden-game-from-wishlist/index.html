@@ -3,18 +3,26 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Архив: 2014/12 | DmitriyMX Blog</title>
+  <title>Удалить скрытую игру в Steam из Списка желаемого | DmitriyMX Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Бложик Java программиста">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DmitriyMX Blog">
-<meta property="og:url" content="https://dmitriymx.ru/archives/2014/12/index.html">
+  <meta name="description" content="ПроблемаВы добавили какую-то игру в “стиме” в “Список желаемого”. Но потом эту игру удалили, она исчезла из “списка”, но продолжает учитываться при общем подсчете “списка желаемого”. Т.е. если вы полн">
+<meta name="keywords" content="steam,javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Удалить скрытую игру в Steam из Списка желаемого">
+<meta property="og:url" content="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/index.html">
 <meta property="og:site_name" content="DmitriyMX Blog">
-<meta property="og:description" content="Бложик Java программиста">
+<meta property="og:description" content="ПроблемаВы добавили какую-то игру в “стиме” в “Список желаемого”. Но потом эту игру удалили, она исчезла из “списка”, но продолжает учитываться при общем подсчете “списка желаемого”. Т.е. если вы полн">
 <meta property="og:locale" content="ru">
+<meta property="og:image" content="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/steam-wishlist-problem.png">
+<meta property="og:image" content="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/steam-wishlist-pick-element.png">
+<meta property="og:image" content="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/console-g_rgWishlistData.png">
+<meta property="og:image" content="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/element-replace-data.png">
+<meta property="og:image" content="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/steam-wishlist-dialog-remove-game.png">
+<meta property="og:updated_time" content="2020-01-19T00:43:18.792Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DmitriyMX Blog">
-<meta name="twitter:description" content="Бложик Java программиста">
+<meta name="twitter:title" content="Удалить скрытую игру в Steam из Списка желаемого">
+<meta name="twitter:description" content="ПроблемаВы добавили какую-то игру в “стиме” в “Список желаемого”. Но потом эту игру удалили, она исчезла из “списка”, но продолжает учитываться при общем подсчете “списка желаемого”. Т.е. если вы полн">
+<meta name="twitter:image" content="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/steam-wishlist-problem.png">
   
     <link rel="alternate" href="/atom.xml" title="DmitriyMX Blog" type="application/atom+xml">
   
@@ -71,116 +79,77 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/26/disable-ping-linux/" class="archive-article-date">
-  <time datetime="2014-12-26T17:57:49.000Z" itemprop="datePublished">дек. 26</time>
+        <section id="main"><article id="post-remove-steam-hidden-game-from-wishlist" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/19/remove-steam-hidden-game-from-wishlist/" class="article-date">
+  <time datetime="2020-01-19T00:10:49.000Z" itemprop="datePublished">2020-01-19</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/26/disable-ping-linux/">Как отключить ping отклик на Linux</a>
+    <h1 class="article-title" itemprop="name">
+      Удалить скрытую игру в Steam из Списка желаемого
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/24/nginx-http-basic-auth/" class="archive-article-date">
-  <time datetime="2014-12-23T21:08:33.000Z" itemprop="datePublished">дек. 24</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/24/nginx-http-basic-auth/">Nginx и HTTP Auth basic</a>
-    </h1>
-  
+        <h2 id="Проблема"><a href="#Проблема" class="headerlink" title="Проблема"></a>Проблема</h2><p>Вы добавили какую-то игру в “стиме” в “Список желаемого”. Но потом эту игру удалили, она исчезла из “списка”, но продолжает учитываться при общем подсчете “списка желаемого”. Т.е. если вы полностью очистите этот “список”, у вас всё равно будет <em>одна желанная игра</em>.</p>
+<img src="/2020/01/19/remove-steam-hidden-game-from-wishlist/steam-wishlist-problem.png">
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/24/file-as-disk/" class="archive-article-date">
-  <time datetime="2014-12-23T21:04:01.000Z" itemprop="datePublished">дек. 24</time>
-</a>
+<h2 id="Решение"><a href="#Решение" class="headerlink" title="Решение"></a>Решение</h2><p>Авторизируйтесь <a href="https://store.steampowered.com/" target="_blank" rel="noopener">на сайте “стима”</a>. Если у вас пустой “Список желаемого”, то добавьте любую одну игру туда.</p>
+<p>Открываем в барузере инструменты разработчика (обычно это по клавише <kbd>F11</kbd>). Инструментом “пипетка” тыкаем на элемент пункта с игрой. Нам важно найти тот элемент пункта, в  теге которого будет аттрибут <code>data-app-id</code>.</p>
+<img src="/2020/01/19/remove-steam-hidden-game-from-wishlist/steam-wishlist-pick-element.png">
+
+<p>Переключаемся на консоль и вводим <code>g_rgWishlistData</code>. В этом массиве хранится список “желанных игр”. И количество элементов там будет не соответствовать тому, что вы видите на экране: игра одна, а элементов два.</p>
+<img src="/2020/01/19/remove-steam-hidden-game-from-wishlist/console-g_rgWishlistData.png">
+
+<p>Опытным путём (сравнив <code>appid</code> в элементах массива и <code>data-app-id</code> в теге html разметки) узнаем какая игра у нас “фантомная”.</p>
+<p>Переходим обратно в “Инспектор” (там где нам подсветили тег с нужным аттрибутом) и меняем значение в аттрибуте <code>data-app-id</code> на значение “фантомной” игры.</p>
+<img src="/2020/01/19/remove-steam-hidden-game-from-wishlist/element-replace-data.png">
+
+<p>Обратно переходим в “Консоль” и дописываем в массив <code>g_rgAppInfo</code> чуточку информации о “фантомной” игре. Без этого обмануть скрипт не удастся:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">g_rgAppInfo[<span class="number">526870</span>] = &#123;<span class="attr">name</span>: <span class="string">"empty"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>А теперь жмем на игре, у которой мы поменяли <code>data-app-id</code>, кнопку “Удалить” и соглашаемся с желаемым действием.</p>
+<img src="/2020/01/19/remove-steam-hidden-game-from-wishlist/steam-wishlist-dialog-remove-game.png">
+
+<p>Всё. После обновления страницы о “фантомных” играх в “списке желаемого” можно забыть.</p>
+<h2 id="Источники"><a href="#Источники" class="headerlink" title="Источники"></a>Источники</h2><ul>
+<li><a href="https://steamcommunity.com/discussions/forum/26/3317353727678212084/" target="_blank" rel="noopener">Steam Forum: Почему у меня в списке желания 3 игры</a></li>
+</ul>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/24/file-as-disk/">Работа с файлами как с дисками</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/23/virtualbox-rawdisk/" class="archive-article-date">
-  <time datetime="2014-12-23T20:55:33.000Z" itemprop="datePublished">дек. 23</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dmitriymx.ru/2020/01/19/remove-steam-hidden-game-from-wishlist/" data-id="ck5karxcb000a18h9amtpf627" class="article-share-link">Поделиться</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/23/virtualbox-rawdisk/">Работа с физическими носителями в VirtualBox</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/12/14/end-of-era-craftbukkit/" class="archive-article-date">
-  <time datetime="2014-12-14T14:31:59.000Z" itemprop="datePublished">дек. 14</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/14/end-of-era-craftbukkit/">Конец эпохи CraftBukkit</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/steam/">steam</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/01/18/the-trustAnchors-parameter-must-be-non-empty/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">the trustAnchors parameter must be non-empty</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
